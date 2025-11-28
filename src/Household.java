@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Household {
+public class Household implements Serializable {
 
     // Attributes
 
@@ -10,7 +11,7 @@ public class Household {
     private String address;
     private LocalDate joiningDate;
     private ArrayList<RecyclingEvent> recyclingEvents;
-    private int householdEcoPoints;
+    private double householdEcoPoints;
 
     // Constructors
 
@@ -33,7 +34,7 @@ public class Household {
     }
 
     // Class methods
-    public void addEcoPoint(int ecoPointsEarned){
+    public void addEcoPoint(double ecoPointsEarned){
         householdEcoPoints += ecoPointsEarned;
     }
 
@@ -89,11 +90,11 @@ public class Household {
         this.recyclingEvents = recyclingEvents;
     }
 
-    public int getHouseholdEcoPoints() {
+    public double getHouseholdEcoPoints() {
         return householdEcoPoints;
     }
 
-    public void setHouseholdEcoPoints(int householdEcoPoints) {
+    public void setHouseholdEcoPoints(double householdEcoPoints) {
         this.householdEcoPoints = householdEcoPoints;
     }
 

@@ -1,40 +1,37 @@
-// src/RecyclingEvent.java
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Set;
 
-public class RecyclingEvent {
+public class RecyclingEvent implements Serializable {
 
     // Valid materials
-    private static final Set<String> MATERIALS = Set.of("plastic", "glass", "metal", "paper");
+    public static final Set<String> MATERIALS = Set.of("plastic", "glass", "metal", "paper");
 
     // Attributes
-    private int householdID;
     private String materialType;
-    private int weight;
+    private double weight;
     LocalDate recyclingDate;
-    int ecoPointsEarned;
+    double ecoPointsEarned;
 
     // Constructors
 
-    public RecyclingEvent(int householdID, String materialType, int weight) throws RecyclingEventException{
-        this.householdID = householdID;
+    public RecyclingEvent(String materialType, double weight) throws RecyclingEventException{
         setMaterialType(materialType);
         setWeight(weight);
-        this.ecoPointsEarned = calculateEcoPoints(weight);
+        this.ecoPointsEarned = weight > 0 ? 10 * weight : 0;
     }
 
-    public RecyclingEvent(int householdID, String materialType, int weight, LocalDate recyclingDate) throws RecyclingEventException{
-        this.householdID = householdID;
+    public RecyclingEvent(String materialType, double weight, LocalDate recyclingDate) throws RecyclingEventException{
         setMaterialType(materialType);
         setWeight(weight);
         this.recyclingDate = recyclingDate;
-        this.ecoPointsEarned = calculateEcoPoints(weight);
+        this.ecoPointsEarned = weight > 0 ? 10 * weight : 0;
     }
 
     @Override
     public String toString() {
-        return householdID + "," + materialType + "," + weight + "," + recyclingDate.toString() + "," + ecoPointsEarned;
+        return materialType + "," + weight + "," + recyclingDate.toString() + "," + ecoPointsEarned;
     }
 
 
@@ -44,10 +41,6 @@ public class RecyclingEvent {
     private boolean isValidMaterial(String material) {
         if (material == null) return false;
         return MATERIALS.contains(material.toLowerCase(Locale.ROOT));
-    }
-
-    private int calculateEcoPoints(int weight){
-        return 10 * weight;
     }
 
     // Getters and setters
@@ -63,11 +56,11 @@ public class RecyclingEvent {
         this.materialType = materialType.toLowerCase(Locale.ROOT);
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) throws RecyclingEventException {
+    public void setWeight(double weight) throws RecyclingEventException {
         if (weight <= 0) {
             throw new RecyclingEventException("Weight must be greater than 0");
         }
@@ -82,20 +75,12 @@ public class RecyclingEvent {
         this.recyclingDate = recyclingDate;
     }
 
-    public int getEcoPointsEarned() {
+    public double getEcoPointsEarned() {
         return ecoPointsEarned;
     }
 
-    public void setEcoPointsEarned(int ecoPointsEarned) {
+    public void setEcoPointsEarned(double ecoPointsEarned) {
         this.ecoPointsEarned = ecoPointsEarned;
-    }
-
-    public int getHouseholdID() {
-        return householdID;
-    }
-
-    public void setHouseholdID(int householdID) throws RecyclingEventException {
-        this.householdID = householdID;
     }
 
 }
