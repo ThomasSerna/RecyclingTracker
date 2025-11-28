@@ -13,7 +13,7 @@ public class RecyclingTracker {
         while (selectedOption != 6){
 
             try{
-                System.out.println("Welcome to recycling tracker\n");
+                System.out.println("\nWelcome to recycling tracker\n");
 
                 System.out.println(
                         "1. Create a new household profile\n" +
@@ -30,17 +30,23 @@ public class RecyclingTracker {
                 switch (selectedOption) {
                     case 1:
                         // createHousehold();
+                        break;
                     case 2:
                         // logRecyclingEvent();
+                        break;
                     case 3:
                         // displayRecords();
+                        break;
                     case 4:
                         // generateReports();
+                        break;
                     case 5:
                         saveData();
+                        break;
                     case 6:
                         System.out.println("Exiting...");
                         sc.close();
+                        return;
                     default:
                         System.out.println("Option not recognized");
                         break;
