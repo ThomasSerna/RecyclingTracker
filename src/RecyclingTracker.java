@@ -37,7 +37,7 @@ public class RecyclingTracker {
                     case 4:
                         // generateReports();
                     case 5:
-                        // saveData();
+                        saveData();
                     case 6:
                         System.out.println("Exiting...");
                         sc.close();
@@ -50,14 +50,14 @@ public class RecyclingTracker {
                 System.out.println("Invalid input");
             }
 
-
-
-
-
         }
     }
 
-
+    private void saveData(){
+        System.out.println("Saving data...\n");
+        StoreData.saveHouseholds(households);
+        StoreData.saveRecyclingEvent(logRecyclingEvents);
+    }
 
 
 

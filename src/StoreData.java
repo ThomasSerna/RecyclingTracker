@@ -7,11 +7,13 @@ import java.util.HashMap;
 
 public class StoreData {
 
-    public void saveHouseholds(HashMap<Integer, Household> householdsMap){
+    public static void saveHouseholds(HashMap<Integer, Household> householdsMap){
         Collection<Household> households = householdsMap.values();
         PrintWriter storer = null;
 
         try {
+            System.out.println("Trying to save households...");
+
             storer = new PrintWriter(new FileWriter("Data/Households.csv"));
 
             // Header
@@ -21,6 +23,8 @@ public class StoreData {
             for (Household x : households){
                 storer.println(x.toString());
             }
+
+            System.out.println("Households saved");
 
         } catch (IOException e){
             System.out.println("Couldnt save household data. Error: " + e.getMessage());
@@ -35,10 +39,12 @@ public class StoreData {
         }
     }
 
-    public void saveRecyclingEvent(ArrayList<RecyclingEvent> recyclingEvents){
+    public static void saveRecyclingEvent(ArrayList<RecyclingEvent> recyclingEvents){
         PrintWriter storer = null;
 
         try {
+            System.out.println("Trying to save recycling events...");
+
             storer = new PrintWriter(new FileWriter("Data/RecyclingEvents.csv"));
 
             // Header
@@ -48,6 +54,8 @@ public class StoreData {
             for (RecyclingEvent x : recyclingEvents){
                 storer.println(x.toString());
             }
+
+            System.out.println("Recycling events saved");
 
         } catch (IOException e){
             System.out.println("Couldnt save recycling events data. Error: " + e.getMessage());
