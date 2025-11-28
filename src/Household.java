@@ -12,6 +12,7 @@ public class Household implements Serializable {
     private LocalDate joiningDate;
     private ArrayList<RecyclingEvent> recyclingEvents;
     private double householdEcoPoints;
+    private double totalWeight;
 
     // Constructors
 
@@ -22,15 +23,7 @@ public class Household implements Serializable {
         this.joiningDate = LocalDate.now();
         this.recyclingEvents = new ArrayList<>();
         this.householdEcoPoints = 0;
-    }
-
-    public Household(int id, String name, String address, LocalDate joiningDate){
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.joiningDate = joiningDate;
-        this.recyclingEvents = new ArrayList<>();
-        this.householdEcoPoints = 0;
+        this.totalWeight = 0;
     }
 
     // Class methods
@@ -38,14 +31,22 @@ public class Household implements Serializable {
         householdEcoPoints += ecoPointsEarned;
     }
 
+    public void addWeight(double weight){
+        totalWeight += weight;
+    }
+
     public void addRecyclingEvent(RecyclingEvent event){
         recyclingEvents.add(event);
         addEcoPoint(event.ecoPointsEarned);
+        addWeight(event.getWeight());
     }
 
     @Override
     public String toString(){
-        return id + "," + name + "," + address + "," + joiningDate.toString() + "," + householdEcoPoints;
+        return "ID: " + this.getId() +
+                ", Name: " + this.getName() +
+                ", Address: " + this.getAddress() +
+                ", Joined: " + this.getJoiningDate();
     }
 
     // Attributes setters and getters
@@ -96,6 +97,10 @@ public class Household implements Serializable {
 
     public void setHouseholdEcoPoints(double householdEcoPoints) {
         this.householdEcoPoints = householdEcoPoints;
+    }
+
+    public double getTotalWeight() {
+        return totalWeight;
     }
 
 }

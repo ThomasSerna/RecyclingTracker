@@ -20,21 +20,16 @@ public class RecyclingEvent implements Serializable {
         setMaterialType(materialType);
         setWeight(weight);
         this.ecoPointsEarned = weight > 0 ? 10 * weight : 0;
-    }
-
-    public RecyclingEvent(String materialType, double weight, LocalDate recyclingDate) throws RecyclingEventException{
-        setMaterialType(materialType);
-        setWeight(weight);
-        this.recyclingDate = recyclingDate;
-        this.ecoPointsEarned = weight > 0 ? 10 * weight : 0;
+        recyclingDate = LocalDate.now();
     }
 
     @Override
     public String toString() {
-        return materialType + "," + weight + "," + recyclingDate.toString() + "," + ecoPointsEarned;
+        return "Date: " + this.recyclingDate +
+                "\nMaterial Type: " + this.materialType +
+                "\nWeight: " + this.weight +
+                "\nEcopoints: " + this.ecoPointsEarned;
     }
-
-
 
     // Class methods
 

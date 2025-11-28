@@ -1,11 +1,8 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class RecyclingTracker {
 
     HashMap<Integer, Household> households = StoreData.loadHouseholdMap();
-    ArrayList<RecyclingEvent> logRecyclingEvents = StoreData.loadRecyclingEvents();
     Scanner sc = new Scanner(System.in);
     int selectedOption = 0;
 
@@ -35,10 +32,10 @@ public class RecyclingTracker {
                         logRecyclingEvent();
                         break;
                     case 3:
-                        // displayRecords();
+                        displayRecords();
                         break;
                     case 4:
-                        // generateReports();
+                        generateReports();
                         break;
                     case 5:
                         saveData();
@@ -59,6 +56,7 @@ public class RecyclingTracker {
         }
     }
 
+    // option 1
     private void createHousehold(){
         System.out.println("Creating a new household...\n");
 
@@ -77,6 +75,7 @@ public class RecyclingTracker {
         households.put(id, household);
     }
 
+    // Option 2
     private void logRecyclingEvent(){
         System.out.println("Creating a new recycling event...\n");
 
@@ -105,28 +104,107 @@ public class RecyclingTracker {
         }
     }
 
+    // Option 3
+    private void displayRecords(){
+        System.out.println("Records menu: ");
+        System.out.println(
+                "1. Show all recycling events for a household\n" +
+                "2. Show total weight recycled by a household\n" +
+                "3. Show total eco points earned by a household\n"
+        );
 
+        int option = Integer.parseInt(sc.nextLine());
 
+        System.out.println("Enter household ID: ");
+        int id = Integer.parseInt(sc.nextLine());
 
+        if (!households.containsKey(id)){
+            System.out.println("invalid id");
+            return;
+        }
+
+        switch (option){
+            case 1:
+                System.out.println("--------------------------------------------");
+                for (RecyclingEvent x : households.get(id).getRecyclingEvents()){
+                    System.out.println(x.toString());
+                    System.out.println("--------------------------------------------");
+                }
+
+                break;
+            case 2:
+                System.out.println("--------------------------------------------");
+                System.out.println("Total weight: " + households.get(id).getTotalWeight());
+                System.out.println("--------------------------------------------");
+
+                break;
+            case 3:
+                System.out.println("--------------------------------------------");
+                System.out.println("Total points: " + households.get(id).getHouseholdEcoPoints());
+                System.out.println("--------------------------------------------");
+
+                break;
+            default:
+                System.out.println("Option not recognized");
+                break;
+
+        }
+
+    }
+
+    // Option 4
+    private void generateReports(){
+        System.out.println("Reports menu: ");
+        System.out.println(
+                "1. Household with the highest total points\n" +
+                "2. Total community recycling weight"
+        );
+
+        int option = Integer.parseInt(sc.nextLine());
+        double totalWeight = 0;
+
+        switch (option){
+            case 1:
+                System.out.println("---------------------------------------------------------------------");
+                System.out.printf("%-5s | %-25s | %-12s | %-15s%n", "ID", "Name", "Total Points", "Total Weight(kg)");
+                System.out.println("---------------------------------------------------------------------");
+
+                ArrayList<Household> list = new ArrayList<>(households.values());
+
+                list.sort((a, b) -> Double.compare(b.getHouseholdEcoPoints(), a.getHouseholdEcoPoints()));
+
+                for (Household h : list) {
+                    int id = h.getId();
+                    String name = h.getName();
+                    double points = h.getHouseholdEcoPoints();
+                    double weight = h.getTotalWeight();
+                    System.out.printf("%-5d | %-25s | %-12.1f | %-15.1f%n", id, name, points, weight);
+                }
+                System.out.println("---------------------------------------------------------------------");
+
+                break;
+            case 2:
+                System.out.println("--------------------------------------------");
+                for (Household h : households.values()) {
+                    totalWeight += h.getTotalWeight();
+                }
+                System.out.println("Total Community Recycling Weight: " + totalWeight + " kg");
+                System.out.println("--------------------------------------------");
+
+                break;
+            default:
+                System.out.println("Option not recognized");
+                break;
+
+        }
+
+    }
+
+    // Option 5
     private void saveData(){
         System.out.println("Saving data...\n");
         StoreData.saveHouseholds(households);
-        StoreData.saveRecyclingEvent(logRecyclingEvents);
     }
-
-    private void loadData(){
-
-    }
-
-
-
-
-
-
-
-
-
-
 
     public static void main(String[] args) {
         RecyclingTracker main = new RecyclingTracker();
